@@ -2,7 +2,7 @@
 <html>
 <head>
  <title>Dublin Bus Dashboard</title>
- <meta name="viewport" content="initial-scale=1.0, user-scalable=no"> 
+ <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
  <meta charset="utf-8">
  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -15,10 +15,29 @@
  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
  <script type="text/javascript" src="Bus.json"></script>
- <script type="text/javascript" src="Congestion.json"></script> 
+ <script type="text/javascript" src="Congestion.json"></script>
 <script type="text/javascript" src="DublinBUS.js"></script>
+<script type="text/javascript" src="map.js"></script>
 
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYBOM3nr4k7F90vVnU42LKoakz3nvhOv0&callback=initialize"></script>
+<style>/* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+#map {
+  height: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}</style>
+
+<div id="map"></div>
+
+<!-- Replace the value of the key parameter with your own API key. -->
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYBOM3nr4k7F90vVnU42LKoakz3nvhOv0&callback=initMap">
+</script>
+<!--<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYBOM3nr4k7F90vVnU42LKoakz3nvhOv0&callback=initialize"></script> -->
  <link rel="stylesheet" href="MainCSS.css">
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
@@ -28,7 +47,7 @@
      <!--  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
+        <span class="icon-bar"></span>
       </button> -->
       <a class="navbar-brand">RealTime DublinBus Dashboard </a>
     </div>
@@ -46,15 +65,15 @@
        <li><a href="#routes">STOPSMAP</a></li>
        <li><a href="#heatmap">HEATMAP</a></li>
        <li><a href="#tweets">TWEETS</a></li>
-     
+
         <li><a onclick="location.href='DublinBikes.html'">DUBLIN BIKES</a></li>
      </ul>
    </div>
  </div>
 </nav>
 <!-- <div class="jumbotron text-center">
-  <h1>City Sustainability Management</h1> 
-  <p>One Stop For City Overview</p> 
+  <h1>City Sustainability Management</h1>
+  <p>One Stop For City Overview</p>
   <form>
     <div class="input-group">
       <input type="email" class="form-control" size="50" placeholder="Email Address" required>
@@ -70,16 +89,16 @@
   <div class="row">
     <div class="col-sm-8">
       <br>
-      
-    
+
+
       <!-- <br><button class="btn btn-default btn-lg">Get in Touch</button> -->
     </div>
-    
+
   </div>
 </div>
 Dublin Bus (Irish: Bus Átha Cliath) is a bus operator providing services in Dublin. It is a subsidiary of Córas Iompair Éireann. The company carried 139.4 million passengers in 2017.Dublin Bus operates an extensive network of 110 radial, cross-city and peripheral routes and 18 night routes in the city of Dublin and the Greater Dublin Area. The company carries around 325,000 people each day.The main radial routes are focused upon Dublin's sixteen Quality Bus Corridors which provide buses with daytime access to the city centre. As of May 2018, the fleet consisted of 1016 buses plying over 110 Routes.Dublin Bus operates seven depots in Clontarf, Conyngham Road, Donnybrook, Harristown, Phibsborough, Ringsend and Summerhill.Dublin bus also has 2 sub depots in bray and in Skerries. There are more than 3000+ Bus Stops in Greater Dublin Area with Real Time Passenger information.<br>
 <a href="http://www.dublinbus.ie/">Official Website of DublinBus</a>
- <br> <b>SORRY ! RAN OUT OF AWS CREDITS. PLEASE TRY THE DUBLIN BIKES VISUALIZATION </b> </br>
+ <br> <b>AWS </b> </br>
 <div id="routes" class="container-fluid text-center bg-grey">
   <h2>STOPS MAP</h2>
 </div>
@@ -100,11 +119,11 @@ Dublin Bus (Irish: Bus Átha Cliath) is a bus operator providing services in Dub
   <a class="twitter-timeline" data-width="300" data-height="600" href="https://twitter.com/dublinbusnews?ref_src=twsrc%5Etfw">Tweets by Dublin Bus</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <a class="twitter-timeline" data-width="300" data-height="600" href="https://twitter.com/LiveDrive?ref_src=twsrc%5Etfw">Tweets by Live Drive </a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <a class="twitter-timeline" data-width="300" data-height="600" href="https://twitter.com/Luas?ref_src=twsrc%5Etfw">Tweets by LUAS</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  
+
   <!-- <a class="twitter-timeline"  data-width="900" data-height="1000" href="https://twitter.com/search?q=%23Traffic%20%23Dublin" data-widget-id="979010721915777024">Tweets about #Traffic and #Dublin</a>
             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script> -->
-          
-         
+
+
 </div>
 <a href="DublinBus.html">
 <img src="img/DublinBus.jpg" alt="an image" margin-left="25pt" align="center" width="1000pt" height="300pt" />
