@@ -1,1 +1,185 @@
-<html><body><h1>It works!</h1></body></html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dublin-Bikes Dashboard</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <!-- <script  type="text/javascript" src="heatmap.js"></script> -->
+  <!-- <script  type="text/javascript" src="leaflet-heatmap.js"></script> -->
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script src="http://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript" src="DublinBUS.js"></script>
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYBOM3nr4k7F90vVnU42LKoakz3nvhOv0&callback=initMap">
+  </script>
+
+  <link rel = "stylesheet"
+   type = "text/css"
+   href = "MainCSS.css" />
+</head>
+ <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+  <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container" >
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="header">
+    <img src="img/logo.jpg" alt="logo" />
+    <a  class="navbar-brand">Dublin-Bikes Dashboard</a>
+  </div>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          <h2 href="#">Statistics</h2>
+          <div style="margin: auto;">
+          	<table id="bikeStationTable"></table>
+          </div>
+          <div id="chart_div" style="height: 300px; width: 100%;"></div>
+        </div>
+        <li><a href="#routes">STATIONS <i class="fa fa-fw fa-search"></i> </a></li>
+        <li><a href="#recommendations"> <i class="fa fa-fw fa-database"></i> DATA</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div id="about" class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8">
+      <br>
+
+
+      <!-- <br><button class="btn btn-default btn-lg">Get in Touch</button> -->
+    </div>
+
+  </div>
+</div>
+</a>
+<style>
+.container {
+  position: relative;
+  text-align: center;
+  color: black;
+}
+
+#map {
+  height: 100%;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+.w3-tangerine {
+  font-family: "Tangerine", serif;
+}
+
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
+
+.header img {
+  float: left;
+  width: 140px;
+  height: 50px;
+  background: #555;
+}
+
+.header h1 {
+  position: relative;
+  top: 18px;
+  left: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>
+<div class="container">
+  <img src="img/Bikes.gif" alt="Snow" align="middle" style="width: 100%;">
+    <div class="top-right" id="chartContainer" style="height: 200px; width: 30%; float: left;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+      <h4 class="top-left" id="Busy_Station"></h4><br>
+  <h2 id="Availability"></h2><br>
+</div>
+
+<div id="routes" class="container-fluid text-center bg-grey" >
+   <br><h2>Location of Bike Stations</h2><br>
+</div>
+<div id="map" ></div>
+<!-- Container (About Section) -->
+<div id="about" class="container-fluid">
+  <div class="row">
+
+      <div><table id="table" class="hidden" style="height: 300px; width: 200px; margin-top: 50px; float: left;">
+
+    </table>
+      </div>
+</div>
+</div>
+<!-- Container (Pricing Section) -->
+<div id="recommendations" class="hidden">
+<select class='hidden' id = "myList"></select>
+  </div>
+  <footer class="container-fluid text-center">
+    <a href="#myPage" title="To Top">
+      <a class="weatherwidget-io" href="https://forecast7.com/en/53d35n6d26/dublin/" data-label_1="DUBLIN" data-label_2="WEATHER" data-theme="original" >DUBLIN WEATHER</a>
+      <script>
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+      </script>
+      <span class="glyphicon glyphicon-chevron-up"></span>
+    </a>
+    <p>Sustainable City Management Project - Group 5</p>
+  </footer>
+
+    </body>
+    <script type="text/javascript" src="DublinBikes.js"></script>
+
+</html>

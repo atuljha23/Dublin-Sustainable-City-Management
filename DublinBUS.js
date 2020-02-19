@@ -1,5 +1,6 @@
 var map;
 var marker;
+
 var table;
 var row;
 var cell1;
@@ -8,25 +9,28 @@ var cell3;
 var cell4;
 var cell5;
 
+showJson();
+//showAirQuality();
 
 function populateTable(markerName, markerAvailabele, markerTotal) {
 
-    console.log(markerName);
-    console.log(markerAvailabele);
-    console.log(markerTotal);
-    cell3.innerHTML = " Average Waiting Time at the Stop ";
-    cell4.innerHTML = " " + markerTotal + " ";
-    cell1.innerHTML = " Total Buses Due ";
-    cell2.innerHTML = " " + markerAvailabele + " ";
-    cell5.innerHTML = " " + markerName + " ";
+  console.log(markerAvailabele);
+  cell1.innerHTML = " Total Bikes Available ";
+  cell2.innerHTML = " " + markerAvailabele + " ";
+  cell3.innerHTML = " Total Bikes Stands ";
+  cell4.innerHTML = " " + markerTotal + " ";
+  cell5.innerHTML = " " + markerName + " ";
 }
+
 
 function openNav(markerName, markerAvailabele, markerTotal) {
 
   populateTable(markerName, markerAvailabele, markerTotal);
+
   document.getElementById("mySidenav").style.display = "block";
 
- google.charts.setOnLoadCallback(drawBasic(markerName));
+  google.charts.load('current', {packages: ['corechart', 'bar']});
+  google.charts.setOnLoadCallback(drawBasic(markerName));
 }
 
 function closeNav() {
@@ -35,22 +39,6 @@ function closeNav() {
 
 function drawBasic(markerName) {
   var data = new google.visualization.DataTable();
-
-  data.addColumn('timeofday', 'Time of Day');
-  data.addColumn('number', 'Motivation Level');
-
-  data.addRows([
-    [{v: [8, 0, 0], f: '8 am'}, 1],
-    [{v: [9, 0, 0], f: '9 am'}, 2],
-    [{v: [10, 0, 0], f:'10 am'}, 3],
-    [{v: [11, 0, 0], f: '11 am'}, 4],
-    [{v: [12, 0, 0], f: '12 pm'}, 5],
-    [{v: [13, 0, 0], f: '1 pm'}, 6],
-    [{v: [14, 0, 0], f: '2 pm'}, 7],
-    [{v: [15, 0, 0], f: '3 pm'}, 8],
-    [{v: [16, 0, 0], f: '4 pm'}, 9],
-    [{v: [17, 0, 0], f: '5 pm'}, 10],
-    ]);
 
   var options = {
     title: markerName,
@@ -73,11 +61,7 @@ function drawBasic(markerName) {
   chart.draw(data, options);
 }
 
-
-
 function initialize() {
-google.charts.load('current', {packages: ['corechart', 'bar']});
-
   table = document.getElementById("bikeStationTable");
   row = table.insertRow(0);
   cell1 = row.insertCell(0);
@@ -88,155 +72,293 @@ google.charts.load('current', {packages: ['corechart', 'bar']});
   row = table.insertRow(0);
   cell5 = row.insertCell(0);
 
-	var mapOptions = {
-		zoom:12,
-		mapTypeId: google.maps.MapTypeId.ROADMAP,
-		center: {lat: 53.353584, lng: -6.251495}
-	}
-	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  var mapOptions = {
+    zoom:14,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    center: {lat: 53.343584, lng: -6.261495}
+  }
+
+  map = new google.maps.Map(document.getElementById('map'), mapOptions);
   var trafficLayer = new google.maps.TrafficLayer();
   trafficLayer.setMap(map);
-  showHeatMap();
-	showJson();
+
+  var  waqiMapOverlay  =  new  google.maps.ImageMapType({
+    getTileUrl:  function(coord,  zoom)  {
+      return  'https://tiles.waqi.info/tiles/usepa-aqi/'  +  zoom  +  "/"  +  coord.x  +  "/"  +  coord.y  +  ".png?token=_TOKEN_ID_";
+    },
+    name:  "Air  Quality",
+  });
+
+  map.overlayMapTypes.insertAt(0,waqiMapOverlay);
 
 }
+
+//var reddata = [];
+
+
+
+
+function showAirQuality()
+{
+
+ request = new XMLHttpRequest();
+ request.open('GET', ' http://erc.epa.ie/real-time-air/www/aqindex/aqih_json.php', true);
+ var data = JSON.parse(request.responseText);
+ console.log(data);
+}
+
+
+
 
 function showJson()
 {
 
   request = new XMLHttpRequest();
-  request.open('GET', 'http://ec2-34-243-117-230.eu-west-1.compute.amazonaws.com:8080/poll/bus/data', true);
-
+  request.open('GET', 'https://api.jcdecaux.com/vls/v1/stations?contract=dublin&apiKey=2b0b28f9e8359ef196ac5cb0ce5b1b64593469c0', true);
+  var array = [];
+  var redarray ;
+  var redder = [[]];
+  var totalav = 0;
+  var low = 0;
+  var heatpoints = [];
+  window.stationname = [];
   request.onload = function() {
-  if (request.status >= 200 && request.status < 400){
-
+    if (request.status >= 200 && request.status < 400){
+    // Success!
     var data = JSON.parse(request.responseText);
-
+    select = document.getElementById('myList');
+    // console.log(data);
     for(var i = 0; i < data.length; i++) {
 
       (function(datas){
-      if(parseInt(datas.stopid) < 100100)
-      {
 
-        var start = {lat: parseFloat(datas.lattitude), lng: parseFloat(datas.longitude)};
-        if(datas.due_count == 0)
-        {
-          marker = new google.maps.Marker({
+        var obj = datas.position;
 
-           icon: {
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 5,
-              fillColor: "#20B2AA",
-              fillOpacity: 0.9,
-              strokeWeight: 0.1
-             },
+    // console.log(obj);
+    //console.log(obj[0]);
+    //var start = {lat: parseFloat(obj['lat']), lng: parseFloat(obj['lng'])};
+    var available = parseFloat(datas.available_bikes);
 
-            position: start,
-            map: map
-          });
-           google.maps.event.addListener(marker, 'click', function () {
-                    openNav(datas.stopid, datas.due_count, datas.waiting_time);
-               });
-       }
-      else
-      {
-            marker = new google.maps.Marker({
+    //console.log(available)
+    var total = parseFloat(datas.bike_stands);
+    // console.log(total)
+    var availability = available / total
+    totalav = totalav + availability
 
-               icon: {
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 5,
-              fillColor: "#FF0000",
-              fillOpacity: 0.9,
-              strokeWeight: 0.1
-               },
+    //console.log(totalav);
+    // console.log(availability)
+    var standn = datas.number
+    //console.log(start);
+    var markers = []
 
-              position: start,
-              map: map
 
-            });
-                  google.maps.event.addListener(marker, 'click', function () {
-                      openNav(datas.stopid, datas.due_count, datas.waiting_time);
+    var opt = document.createElement('option');
+    opt.value = datas.name;
+    opt.innerHTML = datas.name;
+    select.appendChild(opt);
+
+
+    var content = ';<div id="iw-container">' +'<div class="iw-title"> <b> '+datas.name+"</b> </div>" +'<div class="iw-content">'+ " Total Bikes Available " + datas.available_bikes + " <br>Total Bikes Stands " + datas.bike_stands +"</br></div></div>";
+
+    if(availability>=0.75)
+    {
+      marker = new google.maps.Marker({
+        icon: new google.maps.MarkerImage("http://maps.google.com/mapfiles/ms/icons/green-dot.png"),
+        position: new google.maps.LatLng(obj.lat, obj.lng),
+        map: map,
+        content:  content
+      });
+
+      var infoWindow = new google.maps.InfoWindow({
+        content: ''
+      });
+
+      google.maps.event.addListener(marker, 'click', function () {
+        openNav(datas.name, datas.available_bikes, datas.bike_stands);
+                //infoWindow.setContent(this.content + '<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>');
+                //infoWindow.open(this.getMap(), this);
+
               });
+      array.push([parseFloat(obj.lat), parseFloat(obj.lng),parseFloat(((1-availability)))]);
+
+    }
+    else if(availability>=0.25 && availability<0.75)
+    {
+      if (availability>=low) {
+
+        redarray = datas.name;
+        redder.push([datas.name,(availability*100)]);
+          //console.log(redder);
+
+        }
+        marker = new google.maps.Marker({
+          icon: new google.maps.MarkerImage("http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"),
+          position: new google.maps.LatLng(obj.lat, obj.lng),
+          map: map,
+          content: content
+        });
+
+        var infoWindow = new google.maps.InfoWindow({
+          content: ''
+        });
+
+        google.maps.event.addListener(marker, 'click', function () {
+          openNav(datas.name, datas.available_bikes, datas.bike_stands);
+
+        });
+        array.push([parseFloat(obj.lat), parseFloat(obj.lng),parseFloat(((1-availability)))]);
 
       }
-    }
-  } )(data[i]);
-}
-  } else {
+
+      else
+      {
+       if (availability>=low) {
+
+        redarray = datas.name;
+        redder.push([datas.name,(availability*100)]);
+           //console.log(redder);
+
+         }
+         marker = new google.maps.Marker({
+          icon: new google.maps.MarkerImage("http://maps.google.com/mapfiles/ms/icons/red-dot.png"),
+          position: new google.maps.LatLng(obj.lat, obj.lng),
+          map: map,
+          content:  content
+        });
+
+         var infoWindow = new google.maps.InfoWindow({
+          content: ''
+        });
+
+         google.maps.event.addListener(marker, 'click', function () {
+          openNav(datas.name, datas.available_bikes, datas.bike_stands);
+
+        });
+
+         array.push([parseFloat(obj.lat), parseFloat(obj.lng),parseFloat(((1-availability)))]);
+
+
+
+       }
+     } )(data[i]);
+
+    // }
+  }
+
+//console.log(totalav);
+document.getElementById("Availability").innerHTML = "Bikes Availability: " + totalav.toFixed(2) +"%";
+//console.log(redarray);
+document.getElementById("Busy_Station").innerHTML = "Busiest Station: " + redarray;
+var chart = new CanvasJS.Chart("chartContainer", {
+  animationEnabled: true,
+
+  data: [{
+    type: "doughnut",
+    startAngle: 240,
+    yValueFormatString: "##0.00\"%\"",
+    indexLabel: "{label} {y}",
+    dataPoints: [
+    {y: totalav, label: "Bikes Available"},
+    {y: (100-totalav), label: " Bikes Not Available"},
+
+    ]
+  }]
+});
+
+redder.sort(function(a,b) {
+  return a[1]-b[1]
+});
+makeTable(redder);
+
+chart.render();
+} else {
     // We reached our target server, but it returned an error
     console.log("Server returned error")
 
   }
 };
+
 request.onerror = function() {
-  };
+  // There was a connection error of some sort
+};
 
 request.send();
-
+  //console.log(mydata);
+  // alert(mydata[0].location);
 
 
 }
 
+google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawTrendlines);
+
+function drawTrendlines() {
+  var data = new google.visualization.DataTable();
 
 
+  var options = {
+    hAxis: {
+      title: 'Time'
+    },
+    vAxis: {
+      title: 'Availability'
+    },
+    colors: ['#AB0D06', '#007329'],
+    trendlines: {
+      0: {type: 'exponential', color: '#333', opacity: 1},
+      1: {type: 'linear', color: '#111', opacity: .3}
+    }
+  };
 
-function showHeatMap()
-{
-	map2 = L.map('heatmap-canvas').setView([53.343584,-6.261495], 13);
-	mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-	L.tileLayer(
-		'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-			attribution: '&copy; ' + mapLink + ' Contributors',
-			maxZoom: 23,
-		}).addTo(map2);
+  var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
-  var array = [];
-
-  var heatpoints = [];
-  window.stationname = [];
-  // request.onload = function() {
-
-
-$.getJSON('http://ec2-34-243-117-230.eu-west-1.compute.amazonaws.com:8080/poll/bus/data', function(data) {
-
-    var myJsonString = JSON.stringify(data);
+  chart.draw(data, options);
+}
 
 
-    var mydata1 = JSON.parse(myJsonString);
-    for(var i = 0; i < mydata1.length; i++) {
-      if(parseInt(mydata1[i].stopid) < 100100)
+function makeTable(redder) {
+  var table = document.getElementById('table');
+
+
+  for (var i = -1; i < 10; i++) {
+    var row = document.createElement('tr');
+    for (var j = 0; j < 2; j++) {
+      if(i==-1)
       {
+        if(j == 0)
+        {
+          var cell = document.createElement('td');
+          cell.textContent = 'Station';
+          row.appendChild(cell);
+          cell.style.width = '100px';
+          cell.style.fontWeight = 'bold'
+        }
+        else
+        {
+          var cell = document.createElement('td');
+          cell.textContent = 'Availability';
+          row.appendChild(cell);
+          cell.style.width = '100px';
+          cell.style.fontWeight = 'bold'
+        }
 
-    var start = {lat: parseFloat(mydata1[i].lattitude), lng: parseFloat(mydata1[i].longitude)};
+      }
+      else
+      {
+        var cell = document.createElement('td');
+        cell.textContent = redder[i][j];
+        row.appendChild(cell);
+        cell.style.width = '100px';
+           // console.log("Eroor"+redder)
+         }
+       }
 
-    if(mydata1[i].due_count == 0)
-    {
-
-      array.push([parseFloat(mydata1[i].lattitude), parseFloat(mydata1[i].longitude),0.5]);
-    }
-    else
-    {
-      // console.log("Inside due count loop2");
-      array.push([parseFloat(mydata1[i].lattitude), parseFloat(mydata1[i].longitude),parseFloat(mydata1[i].due_count)+0.5]);
-    }
-  }
+     table.appendChild(row);
 }
+   return table;
+ }
 
- });
-
-  var heat = L.heatLayer(array
-    ,{
-      radius: 18,
-      blur: 15,
-      maxZoom: 10,
-    }).addTo(map2);
-
-
-
-
-}
-
-function logout()
+ function logout()
 {
-	window.location = "Login.html";
+  window.location = "Login.html";
 }

@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYBOM3nr4k7F90vVnU42LKoakz3nvhOv0&callback=initialize"></script>
+  <script type="text/javascript" src="DublinBUS.js"></script>
 
   <link rel = "stylesheet"
    type = "text/css"
@@ -76,6 +76,15 @@
   position: relative;
   text-align: center;
   color: black;
+}
+
+#map {
+  height: 100%;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .bottom-left {
@@ -141,7 +150,7 @@
 <div id="routes" class="container-fluid text-center bg-grey" >
    <br><h2>Location of Bike Stations</h2><br>
 </div>
-<div id="map-canvas" ></div>
+<div id="map" ></div>
 <!-- Container (About Section) -->
 <div id="about" class="container-fluid">
   <div class="row">
@@ -166,8 +175,10 @@
     </a>
     <p>Sustainable City Management Project - Group 5</p>
   </footer>
-
+  <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYBOM3nr4k7F90vVnU42LKoakz3nvhOv0&callback=initialize">
+  </script>
     </body>
-    <script type="text/javascript" src="DublinBikes.js"></script>
+
 
 </html>
