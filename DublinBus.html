@@ -28,9 +28,16 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+.header img {
+  float: left;
+  width: 140px;
+  height: 50px;
+
+  }
 }</style>
 
-<div id="map"></div>
+
 
 <!-- Replace the value of the key parameter with your own API key. -->
 <script async defer
@@ -48,7 +55,10 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYBOM3nr4k7F90vVnU42LKoak
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button> -->
-      <a class="navbar-brand">RealTime DublinBus Dashboard </a>
+      <div class="header">
+    <img src="images/dublin.png" alt="logo" />
+    <a  class="navbar-brand">Dublin Bus Dashboard</a>
+  </div>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
      <ul class="nav navbar-nav navbar-right">
@@ -61,11 +71,9 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYBOM3nr4k7F90vVnU42LKoak
           <div id="chart_div" style="height: 300px; width: 100%;"></div>
         </div>
        <li><a href="#about">ABOUT</a></li>
-       <li><a href="#routes">STOPSMAP</a></li>
-       <li><a href="#heatmap">HEATMAP</a></li>
        <li><a href="#tweets">TWEETS</a></li>
-
         <li><a onclick="location.href='DublinBikes.html'">DUBLIN BIKES</a></li>
+          <li><a onclick="location.href='traffic.html'">Dublin Traffic</a></li>
      </ul>
    </div>
  </div>
@@ -95,23 +103,18 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYBOM3nr4k7F90vVnU42LKoak
 
   </div>
 </div>
-Dublin Bus (Irish: Bus Átha Cliath) is a bus operator providing services in Dublin. It is a subsidiary of Córas Iompair Éireann. The company carried 139.4 million passengers in 2017.Dublin Bus operates an extensive network of 110 radial, cross-city and peripheral routes and 18 night routes in the city of Dublin and the Greater Dublin Area. The company carries around 325,000 people each day.The main radial routes are focused upon Dublin's sixteen Quality Bus Corridors which provide buses with daytime access to the city centre. As of May 2018, the fleet consisted of 1016 buses plying over 110 Routes.Dublin Bus operates seven depots in Clontarf, Conyngham Road, Donnybrook, Harristown, Phibsborough, Ringsend and Summerhill.Dublin bus also has 2 sub depots in bray and in Skerries. There are more than 3000+ Bus Stops in Greater Dublin Area with Real Time Passenger information.<br>
-<a href="http://www.dublinbus.ie/">Official Website of DublinBus</a>
- <br> <b>AWSSSSS </b> </br>
-<div id="routes" class="container-fluid text-center bg-grey">
+
+
   <h2>STOPS MAP</h2>
+  <div id="map"></div>
+
 </div>
-<div id="map" style="margin-left: 20px;margin-right: 20px;"></div>
+
 
 <!-- <br> -->
 <!-- Container (Pricing Section) -->
 
 
-<!-- Container (Pricing Section) -->
-<div id="heatmap" class="container-fluid text-center bg-grey">
-  <h2>HEATMAP</h2><br>
-</div>
-<div id="heatmap-canvas" style="width:1400px; height:720px; " ></div>
 
 <div id="tweets" class="container-fluid text-center bg-grey">
   <h2>LIVE TWEETS</h2><br>
@@ -124,9 +127,7 @@ Dublin Bus (Irish: Bus Átha Cliath) is a bus operator providing services in Dub
 
 
 </div>
-<a href="DublinBus.html">
-<img src="img/DublinBus.jpg" alt="an image" margin-left="25pt" align="center" width="1000pt" height="300pt" />
-</a>
+
 <!-- Container (Contact Section) -->
 <!-- <div id="contact" class="container-fluid text-center bg-grey">
   <h2 class="text-center">TEAM 10</h2>
@@ -136,7 +137,7 @@ Dublin Bus (Irish: Bus Átha Cliath) is a bus operator providing services in Dub
   <a href="#myPage" title="To Top">
     <span class="glyphicon glyphicon-chevron-up"></span>
   </a>
-  <p>City Management Project - Team 10, TCD, Dublin, 2018 </p>
+  <p>Sustainable City Management Project - Team 5</p>
 </footer>
 
 </body>
