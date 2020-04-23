@@ -244,11 +244,11 @@ function showJson()
 
     // }
   }
-
+document.getElementById("callme").innerHTML = redarray;
 //console.log(totalav);
 document.getElementById("Availability").innerHTML = "Bikes Availability: " + totalav.toFixed(2) +"%";
 //console.log(redarray);
-document.getElementById("Busy_Station").innerHTML = "Busiest Station: " + redarray;
+document.getElementById("Busy_Station").innerHTML;
 var chart = new CanvasJS.Chart("chartContainer", {
   animationEnabled: true,
 
