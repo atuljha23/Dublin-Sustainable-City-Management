@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Pedestrian Navigation</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script src="http://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+  <link rel = "stylesheet"
+   type = "text/css"
+   href = "MainCSS.css" />
+  <style>
+    .container {
+  position: relative;
+  text-align: center;
+  color: black;
+}
+
+#map {
+  height: 100%;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+.w3-tangerine {
+  font-family: "Tangerine", serif;
+}
+
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
+
+.header img {
+  float: left;
+  width: 140px;
+  height: 50px;
+  
+}
+
+.header h1 {
+  position: relative;
+  top: 18px;
+  left: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+	
+
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    #floating-panel {
+      position: absolute;
+      top: 10px;
+      left: 33%;
+      z-index: 5;
+      background-color: #fff;
+      padding: 5px;
+      border: 1px solid #999;
+      text-align: center;
+      font-family: 'Roboto', 'sans-serif';
+      line-height: 30px;
+      padding-left: 10px;
+    }
+
+    #right-panel {
+      font-family: 'Roboto', 'sans-serif';
+      line-height: 30px;
+      padding-left: 0px;
+      background-color: #dbf3db;
+      color: red;
+    }
+
+    #right-panel select,
+    #right-panel input {
+      font-size: 15px;
+    }
+
+    #right-panel select {
+      width: 100%;
+    }
+
+    #right-panel i {
+      font-size: 12px;
+    }
+
+    #right-panel {
+      height: 100%;
+      float: right;
+      width: 400px;
+      overflow: auto;
+      display: none;
+    }
+
+    #map {
+      margin-right: 0px;
+    }
+
+    #floating-panel {
+      background: #fff;
+      padding: 5px;
+      font-size: 14px;
+      font-family: Arial;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
+      display: none;
+    }
+
+    #panel-header {
+      height: 100px;
+      background-color: #cae4a7;
+    }
+
+    #header-title {
+      font-size: 32px;
+      color: white;
+      text-align: center;
+      margin-top: 0;
+      padding-top: 32px;
+    }
+
+    .location-input {
+      margin: 10px;
+      padding: 10px;
+    }
+
+    @media print {
+      #map {
+        height: 500px;
+        margin: 0;
+      }
+
+      #right-panel {
+        float: none;
+        width: auto;
+      }
+    }
+  </style>
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+  <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container" >
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="header">
+    <img src="images/dublin.png" alt="logo" />
+    <a  class="navbar-brand">Dublin Pedestrian Navigation</a>
+  </div>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          <div style="margin: auto;">
+          </div>height: 300px; width: 100%;"></div>
+        </div>
+		</ul>
+    </div>
+  </div>
+</nav>
+<div id="about" class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8">
+      <br>
+</div>
+
+  </div>
+</div>
+<div class="container">
+  <img src="img/Bikes.gif" alt="Snow" align="middle" style="width: 100%;">
+    <div class="top-right" id="chartContainer" style="height: 200px; width: 30%; float: left;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+      <h4 class="top-left" id="Busy_Station"></h4><br>
+  <h2 id="Availability"></h2><br>
+</div>
+
+  <div id="floating-panel">
+    <input id="myBtn" class="location-input" type="text" size="50" placeholder="Enter Destination Location" autocomplete="on"
+      runat="server"></input>
+    <p id="demo"></p>
+    <p id="a"></p>
+    <p id="b"></p>
+  </div>
+  <div id="right-panel">
+    <div id="panel-header">
+      <p id="header-title">Directions</p>
+    </div>
+  </div>
+  <div id="map"></div>
+  <script>
+
+    class User {
+      constructor(blat, blng) {
+        this.blat = blat;
+        this.blng = blng;
+      }
+
+      sayHi() {
+        alert(this.blat);
+        alert(this.blng);
+      }
+
+    }
+
+    let user = new User();
+    x = navigator.geolocation;
+    x.getCurrentPosition(initMap)
+    y = navigator.geolocation;
+
+    function displayDate() {
+      var input = document.getElementById('myBtn');
+      var autocomplete = new google.maps.places.Autocomplete(input);
+      google.maps.event.addListener(autocomplete, 'place_changed',
+        function () {
+          var place = autocomplete.getPlace();
+          blat = place.geometry.location.lat();
+          blng = place.geometry.location.lng();
+          user.blat = blat;
+          user.blng = blng;
+          let hen = new User(blat, blng);
+          document.getElementById("myBtn").dispatchEvent(new Event("change"));
+        });
+    }
+
+    document.getElementById("myBtn").addEventListener("click", displayDate);
+
+
+    function initMap(position) {
+      var myLat = position.coords.latitude;
+      var myLong = position.coords.longitude;
+      var myLatLng = { lat: myLat, lng: myLong };
+      var directionsRenderer = new google.maps.DirectionsRenderer;
+      var directionsService = new google.maps.DirectionsService;
+      var map = new google.maps.Map(document.getElementById('map'), { zoom: 10, center: myLatLng });
+      directionsRenderer.setMap(map);
+      directionsRenderer.setPanel(document.getElementById('right-panel'));
+      var control = document.getElementById('floating-panel');
+      var rightPanel = document.getElementById('right-panel');
+      control.style.display = 'block';
+      rightPanel.style.display = 'block';
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+      var marker = new google.maps.Marker
+        ({
+          position: myLatLng,
+          map: map,
+          title: 'Hello World!', icon: { url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" }
+        });
+      var onChangeHandler = function () {
+        calculateAndDisplayRoute(directionsService, directionsRenderer, position, user.blat, user.blng);
+      };
+
+      document.getElementById('myBtn').addEventListener('change', onChangeHandler);
+    }
+
+    function calculateAndDisplayRoute(directionsService, directionsRenderer, position, l, la) {
+      var myLat = position.coords.latitude;
+      var myLong = position.coords.longitude;
+      var start = { lat: myLat, lng: myLong }
+      var end = { lat: l, lng: la }
+      directionsService.route
+        ({
+          origin: start,
+          destination: end,
+          travelMode: 'WALKING'
+        },
+          function (response, status) {
+            if (status === 'OK') {
+              directionsRenderer.setDirections(response);
+            }
+            else {
+              window.alert('Directions request failed ddsadsaue to ' + status);
+            }
+          });
+    }
+
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzvm4okef5qU3vTXt-HVtLNeMxQvFhl6M&libraries=places&callback=initMap">
+    </script>
+</body>
+
+</html>
