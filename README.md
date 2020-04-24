@@ -23,7 +23,7 @@ In this dashboard, a user can navigate through the city from a point A to a poin
 In this dashboard, a user can find out the details about traffic in the city and also the congestion details and incidents details are visualized on the map.
 
 # Instructions to Deploy the project
-There are some required steps to be performed to be able to keep the system running smoothly.
+There are some steps to be followed to execute this project.
 
 *Note: These instructions are same for all operating systems.*
 
