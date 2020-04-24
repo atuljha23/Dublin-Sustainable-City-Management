@@ -22,18 +22,23 @@ In this dashboard, a user can navigate through the city from a point A to a poin
 ### Dublin Traffic Dashboard
 In this dashboard, a user can find out the details about traffic in the city and also the congestion details and incidents details are visualized on the map.
 
-# Instruction to Deploy the project
+# Instructions to Deploy the project
 There are some required steps to be performed to be able to keep the system running smoothly.
 
 *Note: These instructions are same for all operating systems.*
 
 *Follow these steps to run the Irish Rail Dashboard. Other Dashboards do not need any particular steps to be followed before executing.*
 
-**Step 1:-** Install XAMPP from https://www.apachefriends.org/index.html
+**Step 1:-** Install XAMPP from https://www.apachefriends.org/index.html.
+
 **Step 2:-** Start Apache and MySQL from the XAMPP Control Panel.
+
 **Step 3:-** Open the localhost on any browser.
+
 **Step 4:-** Create a new database named *transportation*.
+
 **Step 5:-** Import the SQL table named (dtrain.sql) from the folder named - (sql table backup).
+
 **Step 6:-** Now click the Irish Rail Dashboard icon from the main dashboard.
 
 **Other Dashboards can simply be executed by clicking on the icons in the main dashboard.**
