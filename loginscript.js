@@ -8,21 +8,16 @@ function redirectPage()
     console.log(userPassword);
     if(userName == "DublinBus" && userPassword == "DublinBus")
     {
-      window.location = "DublinBus.html";
+      window.location = "dashboard.html";
       // return false;
     }
     else if(userName == "DublinBikes" && userPassword == "DublinBikes")
     {
-      window.location = "DublinBikes.html";
-      // return false;
-    }
-    else if(userName == "CityManager" && userPassword == "CityManager")
-    {
-      window.location = "DublinManager.html";
+      window.location = "dashboard.html";
       // return false;
     }
     else
     {
-      alert("Wrong Credentials. Try again !!!!");
+      alert("Wrong Credentialsssssssss. Try again !!!!");
     }
   }

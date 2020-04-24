@@ -6,19 +6,14 @@ function redirectPage()
     var userPassword = document.getElementById('Password').value;
     console.log(userName);
     console.log(userPassword);
-    if(userName == "DublinBus" && userPassword == "DublinBus")
+    if(userName == "user" && userPassword == "password")
     {
-      window.location = "DublinBus.html";
+      window.location = "dashboard.html";
       // return false;
     }
-    else if(userName == "DublinBikes" && userPassword == "DublinBikes")
+    else if(userName == "user2" && userPassword == "password2")
     {
-      window.location = "DublinBikes.html";
-      // return false;
-    }
-    else if(userName == "CityManager" && userPassword == "CityManager")
-    {
-      window.location = "DublinManager.html";
+      window.location = "dashboard.html";
       // return false;
     }
     else
