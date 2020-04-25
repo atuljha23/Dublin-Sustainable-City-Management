@@ -5,7 +5,7 @@ This project focuses on resolving some of the common problems that occur in larg
 * Dublin Bike Dashboard
 * Irish Rail Dashboard
 * Pedestrain Navigation Dashboard
-* Dublin Traffic Dashboard
+* Dublin Traffic Flow and Incidents Dashboard
 
 ### Dublin Bus Dashboard
 In this dashboard, a user can find all the details needed to commute via bus in city of Dublin. Information such as bus number, stop information, route and locations, etc.
