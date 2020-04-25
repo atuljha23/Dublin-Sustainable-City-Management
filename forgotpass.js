@@ -8,12 +8,12 @@ function Forgot()
     console.log(userSecurity);
     if(userName == "DublinBus" && userSecurity == "Dublin")
     {
-      alert("Hi! your password is: DublinBus");
+      alert("Hi! User, your password has been sent to your email address.");
       // return false;
     }
     else if(userName == "DublinBikes" && userPassword == "Cork")
     {
-        alert("Hi! DublinBikes your password is: DublinBikes");
+        alert("Hi! User, your password has been sent to your email address.");
       // return false;
     }
     else
