@@ -27,7 +27,7 @@ There are some steps to be followed to execute this project.
 
 *Note: These instructions are same for all operating systems.*
 
-*Follow these steps to run the Irish Rail Dashboard. Other Dashboards do not need any particular steps to be followed before executing.*
+*Follow these steps to run the Dashboard.
 
 **Step 1:-** Install XAMPP from https://www.apachefriends.org/index.html.
 
@@ -39,6 +39,4 @@ There are some steps to be followed to execute this project.
 
 **Step 5:-** Import the SQL table named (dtrain.sql) from the folder named - (sql table backup).
 
-**Step 6:-** Now click the Irish Rail Dashboard icon from the main dashboard.
-
-**Other Dashboards can simply be executed by clicking on the icons in the main dashboard.**
+**Step 6:-** Now run index.html from the source location.
